@@ -10,53 +10,24 @@
  */
 class Solution {
     public boolean isPalindrome(ListNode head) {
-        if (head == null || head.next == null) return true;
-
-        // Step 1: Find the middle of the linked list
-        ListNode slow = head;
-        ListNode fast = head;
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
+        if(head == null){
+           return true;
         }
-
-        // Step 2: Reverse the second half of the list starting from slow
-        ListNode secondHalfHead = reverseList(slow);
-        ListNode firstHalfHead = head;
-
-        // Step 3: Compare values of the first half and reversed second half
-        ListNode p1 = firstHalfHead;
-        ListNode p2 = secondHalfHead;
-        boolean isPalindrome = true;
-        
-        while (p2 != null) {
-            if (p1.val != p2.val) {
-                isPalindrome = false;
-                break;
+        ListNode current=head;
+        ArrayList <Integer> list=new ArrayList<>();
+        while(current != null){
+            list.add(current.val);
+            current=current.next;
+        }
+        int left=0;
+        int right=list.size()-1;
+        while(left < right){
+            if(list.get(left) != list.get(right)){
+                return false;
             }
-            p1 = p1.next;
-            p2 = p2.next;
+            left++;
+            right--;
         }
-
-        // Step 4: Restore the list (good practice for interviews)
-        reverseList(secondHalfHead);
-
-        return isPalindrome;
-    }
-
-    private ListNode reverseList(ListNode head) {
-        ListNode prev = null;
-        ListNode curr = head;
-        while (curr != null) {
-            ListNode nextTemp = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = nextTemp;
-        }
-        return prev;
+        return true;
     }
 }
-
-  
-        
-    
